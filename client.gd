@@ -1,6 +1,6 @@
 extends Control
 
-
+# test 2023/12/09 by RK
 
 #
 @onready var v_box_container = %VBoxContainer
@@ -57,7 +57,7 @@ func _ready():
 func connected_to_server():
 	print("client connected to server success!")
 	$ConnStatus.text = "connected"
-	#multiplayer.rpc(0,Web,"test2",["客户端向您问�?"])
+	#multiplayer.rpc(0,Web,"test2",["客户端向您问�?"])
 	#if is_creator:
 		#rpc_id(1, "create_room", my_info)
 	#else:
