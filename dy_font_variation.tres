@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://bnkhbrbxw3n74"]
+
+[ext_resource type="FontFile" uid="uid://cffc07s1u1558" path="res://fonts/msyh.ttc" id="1_mxpdf"]
+
+[resource]
+base_font = ExtResource("1_mxpdf")

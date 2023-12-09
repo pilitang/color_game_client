@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://cuhpu7egxsnhv"]
+
+[ext_resource type="Texture2D" uid="uid://drddgt4n7cspt" path="res://hex_grid.png" id="1_c75te"]
+[ext_resource type="Script" path="res://node_2d.gd" id="1_tshts"]
+[ext_resource type="Script" path="res://TileMap.gd" id="3_g3fpt"]
+[ext_resource type="Texture2D" uid="uid://bihkf6fu0x8ec" path="res://icon.svg" id="4_a4nd3"]
+
+[sub_resource type="TileSet" id="TileSet_lhdgk"]
+tile_size = Vector2i(128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmn2f"]
+atlas = ExtResource("1_c75te")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fe3kk"]
+texture = SubResource("AtlasTexture_lmn2f")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fi7mn"]
+atlas = ExtResource("1_c75te")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1wakb"]
+texture = SubResource("AtlasTexture_fi7mn")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3r6u"]
+atlas = ExtResource("1_c75te")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cpsx1"]
+texture = SubResource("AtlasTexture_y3r6u")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a3fct"]
+texture = ExtResource("4_a4nd3")
+
+[sub_resource type="TileSet" id="TileSet_q32n1"]
+sources/0 = SubResource("TileSetAtlasSource_fe3kk")
+sources/1 = SubResource("TileSetAtlasSource_1wakb")
+sources/2 = SubResource("TileSetAtlasSource_cpsx1")
+sources/3 = SubResource("TileSetAtlasSource_a3fct")
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_tshts")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_lhdgk")
+format = 2
+script = ExtResource("3_g3fpt")
+tile_size = Vector2(128, 128)
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_q32n1")
+format = 2
+script = ExtResource("3_g3fpt")
+tile_size = Vector2(128, 128)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -66.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="draw_Button" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "绘制"
+
+[node name="removal_Button" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "清除"
+
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/draw_Button" to="." method="_on_draw_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/removal_Button" to="." method="_on_removal_button_pressed"]

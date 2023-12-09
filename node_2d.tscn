@@ -1,0 +1,124 @@
+[gd_scene load_steps=9 format=3 uid="uid://cuhpu7egxsnhv"]
+
+[ext_resource type="Script" path="res://node_2d.gd" id="1_tshts"]
+[ext_resource type="Texture2D" uid="uid://dktd5rk2m3vlu" path="res://hex_grid.png" id="2_4wo8q"]
+[ext_resource type="Script" path="res://TileMap.gd" id="3_g3fpt"]
+[ext_resource type="Script" path="res://common/base/base_control.gd" id="3_nqvvc"]
+[ext_resource type="FontVariation" uid="uid://bnkhbrbxw3n74" path="res://dy_font_variation.tres" id="5_hcn82"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o0r7t"]
+texture = ExtResource("2_4wo8q")
+texture_region_size = Vector2i(111, 95)
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_rei1g"]
+tile_offset_axis = 1
+tile_size = Vector2i(111, 95)
+sources/0 = SubResource("TileSetAtlasSource_o0r7t")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yniq2"]
+bg_color = Color(0.67451, 0.580392, 0.501961, 1)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_tshts")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_rei1g")
+format = 2
+script = ExtResource("3_g3fpt")
+tile_size = Vector2(102, 94)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 1284.0
+offset_bottom = 612.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(1100, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("3_nqvvc")
+styleBox = SubResource("StyleBoxFlat_yniq2")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(120, 320)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="draw_Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_hcn82")
+text = "绘制"
+
+[node name="removal_Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_hcn82")
+text = "清除"
+
+[node name="export_Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_hcn82")
+text = "导出地图数据"
+
+[node name="import_Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_hcn82")
+text = "导入地图数据"
+
+[node name="FileExportDialog" type="FileDialog" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+
+[node name="FileImportDialog" type="FileDialog" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(107, 209)
+zoom = Vector2(0.2, 0.2)
+
+[connection signal="laod_complete" from="TileMap" to="." method="_on_tile_map_laod_complete"]
+[connection signal="gui_input" from="CanvasLayer/Control/HBoxContainer/MarginContainer2" to="." method="_on_margin_container_2_gui_input"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/draw_Button" to="." method="_on_draw_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/removal_Button" to="." method="_on_removal_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/export_Button" to="." method="_on_export_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/import_Button" to="." method="_on_import_button_pressed"]
+[connection signal="file_selected" from="CanvasLayer/Control/FileExportDialog" to="." method="_on_file_export_dialog_file_selected"]
+[connection signal="file_selected" from="CanvasLayer/Control/FileImportDialog" to="." method="_on_file_import_dialog_file_selected"]

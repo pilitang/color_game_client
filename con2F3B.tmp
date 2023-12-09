@@ -1,0 +1,99 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2ug11gccvw24"]
+
+[ext_resource type="Script" path="res://client.gd" id="1_twki5"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 43.0
+offset_bottom = 52.0
+script = ExtResource("1_twki5")
+
+[node name="Host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 27.0
+offset_right = 242.0
+offset_bottom = 104.0
+text = "Create Room"
+
+[node name="Join" type="Button" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 489.0
+offset_right = 222.0
+offset_bottom = 561.0
+text = "Join Room"
+
+[node name="StartGame" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 43.0
+offset_top = 129.0
+offset_right = 201.0
+offset_bottom = 180.0
+text = "Start Game"
+
+[node name="NameEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 109.0
+offset_top = 296.0
+offset_right = 246.0
+offset_bottom = 362.0
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 309.0
+offset_right = 131.0
+offset_bottom = 377.0
+text = "Name"
+
+[node name="DrawMap" type="Button" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 386.0
+offset_right = 218.0
+offset_bottom = 460.0
+text = "Draw Map"
+
+[node name="Roomid_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 236.0
+offset_right = 119.0
+offset_bottom = 268.0
+text = "Room ID: "
+
+[node name="Roomid_value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 109.0
+offset_top = 236.0
+offset_right = 230.0
+offset_bottom = 286.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 657.0
+offset_top = 68.0
+offset_right = 1157.0
+offset_bottom = 626.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 822.0
+offset_top = 15.0
+offset_right = 996.0
+offset_bottom = 41.0
+text = "Select a waiting room"
+
+[connection signal="pressed" from="Host" to="." method="_on_create_button_pressed"]
+[connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
+[connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="DrawMap" to="." method="_on_draw_map_pressed"]

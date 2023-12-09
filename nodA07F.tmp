@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuhpu7egxsnhv"]
+
+[ext_resource type="Script" path="res://node_2d.gd" id="1_tshts"]
+[ext_resource type="Script" path="res://TileMap.gd" id="3_g3fpt"]
+
+[sub_resource type="TileSet" id="TileSet_lhdgk"]
+tile_size = Vector2i(128, 128)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_tshts")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_lhdgk")
+format = 2
+script = ExtResource("3_g3fpt")
+tile_size = Vector2(128, 128)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -66.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="draw_Button" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "绘制"
+
+[node name="removal_Button" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "清除"
+
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/draw_Button" to="." method="_on_draw_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/removal_Button" to="." method="_on_removal_button_pressed"]

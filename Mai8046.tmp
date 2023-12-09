@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://7axe4f61otd0"]
+
+[ext_resource type="Texture2D" uid="uid://bcfabh6ccnyma" path="res://素材/hex_grid.png" id="1_yabcu"]
+[ext_resource type="Script" path="res://Player.gd" id="2_l27aq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r2jmf"]
+texture = ExtResource("1_yabcu")
+margins = Vector2i(9, 8)
+separation = Vector2i(18, 0)
+texture_region_size = Vector2i(110, 96)
+0:0/0 = 0
+1:0/0 = 0
+2:0/next_alternative_id = 5
+2:0/0 = 0
+2:0/1 = 1
+2:0/1/modulate = Color(1, 0, 0, 1)
+2:0/2 = 2
+2:0/2/modulate = Color(0, 1, 0, 1)
+2:0/3 = 3
+2:0/3/modulate = Color(1, 1, 0, 1)
+
+[sub_resource type="TileSet" id="TileSet_f5u3d"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(110, 96)
+sources/0 = SubResource("TileSetAtlasSource_r2jmf")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_do2wm"]
+
+[node name="Main_2d" type="Node2D"]
+position = Vector2(0, 3)
+scale = Vector2(0.6, 0.6)
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(820, 613.333)
+tile_set = SubResource("TileSet_f5u3d")
+navigation_visibility_mode = 1
+format = 2
+layer_0/tile_data = PackedInt32Array(-131079, 131072, 0, -131073, 131072, 0, -65538, 131072, 0, -65539, 0, 0, -65542, 131072, 0, -65541, 0, 0, -65543, 131072, 0, -7, 0, 0, 65529, 0, 0, 131065, 131072, 0, 196602, 131072, 0, 196603, 0, 0, 196604, 0, 0, 196605, 0, 0, 196606, 0, 0, -65537, 131072, 0, -1, 0, 0, 65535, 0, 0, 131071, 131072, 0, -4, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, -196615, 0, 0, -262151, 0, 0, -262150, 0, 0, -327685, 0, 0, -327684, 131072, 0, -196609, 0, 0, -262144, 0, 0, -327679, 0, 0, 131078, 131072, 0, 65543, 0, 0, 65544, 131072, 0, 196614, 0, 0, 196615, 0, 0, 262152, 131072, 0, 196617, 131072, 0, 131081, 0, 0, 65545, 131072, 0, 9, 131072, 0, 65541, 131072, 0, 5, 0, 0, -65531, 0, 0, -131067, 131072, 0, -262140, 0, 0, -327677, 0, 0, -327678, 131072, 0, -131066, 131072, 0, -196601, 0, 0, -131064, 131072, 0, -65527, 0, 0, -131063, 131072, 0, -262138, 0, 0, -327673, 0, 0, -327672, 131072, 0, -327671, 131072, 0, -262135, 0, 0, -196599, 131072, 0, -262139, 131072, 0, 131076, 0, 0, -196603, 131072, 0, 196601, 131072, 0, 262153, 131072, 0, -393207, 131072, 0, -393214, 131072, 0)
+script = ExtResource("2_l27aq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1068.33, 595)
+scale = Vector2(-21842, 119877)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_do2wm")
