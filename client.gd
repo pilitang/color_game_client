@@ -6,15 +6,15 @@ extends Control
 @onready var v_box_container = %VBoxContainer
 
 #Test
-var port = 8888
-var protocol = "ws://"
-var ip = "127.0.0.1"
+# var port = 8888
+# var protocol = "ws://"
+# var ip = "127.0.0.1"
 
 # Product
-#var port = 443
-#var protocol = "wss://"
-#var ip = "47.89.227.219"
-# var ip = "121.40.151.157"
+var port = 443
+var protocol = "wss://"
+# var ip = "47.89.227.219"
+var ip = "121.40.151.157"
 
 
 var my_peer_id = 0
@@ -57,7 +57,7 @@ func _ready():
 func connected_to_server():
 	print("client connected to server success!")
 	$ConnStatus.text = "connected"
-	#multiplayer.rpc(0,Web,"test2",["客户端向您问好"])
+	#multiplayer.rpc(0,Web,"test2",["客户端向您问�?"])
 	#if is_creator:
 		#rpc_id(1, "create_room", my_info)
 	#else:
