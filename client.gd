@@ -7,15 +7,15 @@ extends Control
 @onready var v_box_container = %VBoxContainer
 
 #Test
-# var port = 8888
-# var protocol = "ws://"
-# var ip = "127.0.0.1"
+var port = 8888
+var protocol = "ws://"
+var ip = "127.0.0.1"
 
 # Product
-var port = 443
-var protocol = "wss://"
-# var ip = "47.89.227.219"
-var ip = "121.40.151.157"
+#var port = 443
+#var protocol = "wss://"
+## var ip = "47.89.227.219"
+#var ip = "121.40.151.157"
 
 
 var my_peer_id = 0
