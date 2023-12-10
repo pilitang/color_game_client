@@ -2,6 +2,7 @@ extends Control
 
 # test 2023/12/09 by RK
 
+
 #
 @onready var v_box_container = %VBoxContainer
 
