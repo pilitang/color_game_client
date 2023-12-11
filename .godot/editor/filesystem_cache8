@@ -1,14 +1,14 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1702212084
+::res://::1702290435
 client.gd::GDScript::-1::1702210234::0::1::::<>Control<>::
-control.tscn::PackedScene::4323219124569622547::1702211347::0::1::::<><>::res://client.gd
+control.tscn::PackedScene::4323219124569622547::1702212098::0::1::::<><>::res://client.gd
 dy_font_variation.tres::FontVariation::3319947128788677617::1702179015::0::1::::<><>::uid://cffc07s1u1558
 export_presets.cfg::TextFile::-1::1702179015::0::1::::<><>::
 GameManager.gd::GDScript::-1::1702210234::0::1::::<>Node<>::
 Global.gd::GDScript::-1::1702179015::0::1::::<>Node<>::
 hex_grid.png::CompressedTexture2D::7900610299171123294::1702179016::1702179111::1::::<><>::
 icon.svg::CompressedTexture2D::2962999812863903382::1702179016::1702179111::1::::<><>::
-Main.tscn::PackedScene::2247448162771276027::1702211347::0::1::::<><>::uid://dktd5rk2m3vlu::::res://hex_grid.png<>res://Player.gd<>res://ScoreDisplayerScrip.gd<>uid://bnkhbrbxw3n74::::res://dy_font_variation.tres
+Main.tscn::PackedScene::2247448162771276027::1702212098::0::1::::<><>::uid://dktd5rk2m3vlu::::res://hex_grid.png<>res://Player.gd<>res://ScoreDisplayerScrip.gd<>uid://bnkhbrbxw3n74::::res://dy_font_variation.tres
 MapPath.gd::GDScript::-1::1702179015::0::1::::<>LineEdit<>::
 map_item.gd::GDScript::-1::1702179016::0::1::::<>BaseDataControl<>::
 map_item.tscn::PackedScene::2163738556878938387::1702179016::0::1::::<><>::uid://bihkf6fu0x8ec
