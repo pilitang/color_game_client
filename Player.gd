@@ -113,7 +113,15 @@ func _ready():
 	#_reeady return : romove_white_neighbour_graph  eighbour_graph 
 	#####连通性_ready
 	your_color()
-	
+	#----------------------------------log file—-----------------------------------#
+	var verb = "Start"
+	var object = "game"
+	var context = ""
+	var uid = myself_id
+	var mydata = info_log(uid, verb, object, context)
+	logging("log.json",mydata)
+
+#----------------------------------log end—----------------------------------#
 	
 #------------------UI Label code-------------#
 #label显示点击剩余次数
@@ -142,7 +150,16 @@ func _on_timer_timeout():
 	var mylocal_room_id = local_room_id
 	time_after_game = Time.get_ticks_msec() 
 	GameManager.timeout.rpc_id(1,pos_clicked, PlayerX, myself_id, timestamp, time_after_game,timeout,mylocal_room_id)
+#----------------------------------log file—-----------------------------------#
+		
+	var verb = "Pass"
+	var object = "Time out"
+	var context = ""
+	var uid = player1_id
+	var mydata = info_log(uid, verb, object, context)
+	logging("log.json",mydata)
 	
+#----------------------------------log end—----------------------------------#
 func time_on():
 	var timer = $Timer
 	timer.start()
@@ -187,7 +204,25 @@ func _input(event):
 			var new_tile_alt = PlayerX
 			#log
 			var mylocal_room_id = local_room_id
-
+#----------------------------------log file—-----------------------------------#
+			
+			var verb = "input"
+			var object = "position"
+			if current_atlas_coords == white:
+				object = "white"
+			elif current_atlas_coords == black:
+				object = "black"
+			var context = {}
+			context["position"] = pos_clicked
+			if can_process_input == true:
+				context["can_process_input"] = "true"
+			else:
+				context["can_process_input"] = "false"
+			var uid = myself_id
+			var mydata = info_log(uid, verb, object, context)
+			print(mydata)
+			logging("log.json",mydata)
+#----------------------------------log end—----------------------------------#
 			if current_atlas_coords == white and input_counter<N and current_tile_alt == 0:
 				#如果不是服务器，发送点击位置到服务器
 				can_process_input = false
@@ -612,8 +647,22 @@ func sync_tile_change(pos_clicked,atlas_color, tile_alt):
 		pos_list = pos_list_p2
 		score_p2 = get_score(pos_list)
 		update_score_p2(score_p2)
+#----------------------------------log file—-----------------------------------#
 		
+		var verb = "Score"
+		var object = score_p1
+		var context = ""
+		var uid = player1_id
+		var mydata = info_log(uid, verb, object, context)
+		logging("log.json",mydata)
 		
+		verb = "Score"
+		object = score_p2
+		context = ""
+		uid = player2_id
+		mydata = info_log(uid, verb, object, context)
+		logging("log.json",mydata)
+#----------------------------------log end—----------------------------------#
 	else:
 		pass
 
@@ -667,29 +716,25 @@ func get_score(pos_list):
 
 #---------------------------------------------------------------#
 
-
-
-
-
-
+#----------------------------------log file—-----------------------------------#
 func logging(file_name, content):
-	
-	var path = "user://Inputlogs//" + file_name
-	var file = FileAccess.open(path, FileAccess.READ_WRITE)
-	if FileAccess.file_exists(path):
-
-		if file:
-			var json_string = JSON.stringify(content)
-			file.seek_end()
-			file.store_line(json_string + "\n")
-			file.close()
-	else:
-		file= FileAccess.open(path, FileAccess.WRITE)
-		if file:
-			var json_string = JSON.stringify(content)
-			file.seek_end()
-			file.store_line(json_string + "\n")
-			file.close()
+	GameManager.logging_server.rpc_id(1,file_name,content)
+#	var path = "user://Inputlogs//" + file_name
+#	var file = FileAccess.open(path, FileAccess.READ_WRITE)
+#	if FileAccess.file_exists(path):
+#
+#		if file:
+#			var json_string = JSON.stringify(content)
+#			file.seek_end()
+#			file.store_line(json_string + "\n")
+#			file.close()
+#	else:
+#		file= FileAccess.open(path, FileAccess.WRITE)
+#		if file:
+#			var json_string = JSON.stringify(content)
+#			file.seek_end()
+#			file.store_line(json_string + "\n")
+#			file.close()
 
 func info_log(uid, verb, object, context):
 	var mytimestamp = Time.get_datetime_string_from_system(false, true)
@@ -702,12 +747,7 @@ func info_log(uid, verb, object, context):
 		"timestamp" : mytimestamp,
 		"Time_After_Start" : mytimestamp_msec
 	}
-
-
-
-
-
-
+	return mydata
 
 	######Game start Log###########
 #	var verb = "Start"
@@ -715,7 +755,7 @@ func info_log(uid, verb, object, context):
 #	var context = ""
 #	var mydata = info_log(uid, verb, object, context)
 #	logging("log.json",mydata)
-
+#----------------------------------log file—-----------------------------------#
 
 
 ######For test#####No use

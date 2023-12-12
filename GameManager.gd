@@ -352,3 +352,24 @@ func resume_input():
 @rpc("any_peer")
 func set_cell_color_rpc(player1_pos, player2_pos, playerx_winner):
 	get_tree().root.get_children()[2].get_node("TileMap").set_cell_color(player1_pos, player2_pos, playerx_winner)
+
+
+#----------------------------------log file—-----------------------------------#
+@rpc("any_peer")
+func logging_server(file_name,content):
+	var path = "user://Inputlogs//" + file_name
+	var file = FileAccess.open(path, FileAccess.READ_WRITE)
+	if FileAccess.file_exists(path):
+
+		if file:
+			var json_string = JSON.stringify(content)
+			file.seek_end()
+			file.store_line(json_string + "\n")
+			file.close()
+	else:
+		file= FileAccess.open(path, FileAccess.WRITE)
+		if file:
+			var json_string = JSON.stringify(content)
+			file.seek_end()
+			file.store_line(json_string + "\n")
+			file.close()
