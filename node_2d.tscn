@@ -6,17 +6,17 @@
 [ext_resource type="Script" path="res://common/base/base_control.gd" id="3_nqvvc"]
 [ext_resource type="FontVariation" uid="uid://bnkhbrbxw3n74" path="res://dy_font_variation.tres" id="5_hcn82"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o0r7t"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pgt5k"]
 texture = ExtResource("2_4wo8q")
 texture_region_size = Vector2i(111, 95)
 0:0/0 = 0
 0:1/0 = 0
 0:2/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_rei1g"]
+[sub_resource type="TileSet" id="TileSet_5xt0x"]
 tile_offset_axis = 1
 tile_size = Vector2i(111, 95)
-sources/0 = SubResource("TileSetAtlasSource_o0r7t")
+sources/0 = SubResource("TileSetAtlasSource_pgt5k")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yniq2"]
 bg_color = Color(0.67451, 0.580392, 0.501961, 1)
@@ -25,7 +25,7 @@ bg_color = Color(0.67451, 0.580392, 0.501961, 1)
 script = ExtResource("1_tshts")
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_rei1g")
+tile_set = SubResource("TileSet_5xt0x")
 format = 2
 script = ExtResource("3_g3fpt")
 tile_size = Vector2(102, 94)
@@ -41,10 +41,10 @@ offset_bottom = 40.0
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_right = 1284.0
-offset_bottom = 612.0
+offset_bottom = 719.0
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer"]
-custom_minimum_size = Vector2(1100, 0)
+custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 size_flags_vertical = 3
 

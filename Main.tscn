@@ -50,16 +50,14 @@ scale = Vector2(-21842, 119877)
 [node name="ScoreDisplay" type="Node" parent="."]
 script = ExtResource("3_f6ddo")
 
-[node name="color" type="Label" parent="ScoreDisplay"]
-offset_left = 1058.0
-offset_top = 96.0
-offset_right = 1154.0
-offset_bottom = 126.0
-theme_override_fonts/font = ExtResource("4_ynm1g")
-text = "剩余时间"
-metadata/_edit_lock_ = true
+[node name="Control" type="Control" parent="ScoreDisplay"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="clock" type="Label" parent="ScoreDisplay"]
+[node name="clock" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1056.0
 offset_top = 25.0
 offset_right = 1168.0
@@ -68,7 +66,16 @@ theme_override_fonts/font = ExtResource("4_ynm1g")
 text = "你的颜色"
 metadata/_edit_lock_ = true
 
-[node name="chanceremaining" type="Label" parent="ScoreDisplay"]
+[node name="color" type="Label" parent="ScoreDisplay/Control"]
+offset_left = 1058.0
+offset_top = 96.0
+offset_right = 1154.0
+offset_bottom = 126.0
+theme_override_fonts/font = ExtResource("4_ynm1g")
+text = "剩余时间"
+metadata/_edit_lock_ = true
+
+[node name="chanceremaining" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1057.0
 offset_top = 169.0
 offset_right = 1241.0
@@ -79,7 +86,7 @@ text = "剩余点击机会
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="color_value" type="Label" parent="ScoreDisplay"]
+[node name="color_value" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1056.0
 offset_top = 57.0
 offset_right = 1157.0
@@ -88,7 +95,7 @@ theme_override_fonts/font = ExtResource("4_ynm1g")
 text = "Color"
 metadata/_edit_lock_ = true
 
-[node name="time_value" type="Label" parent="ScoreDisplay"]
+[node name="time_value" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1058.0
 offset_top = 125.0
 offset_right = 1149.0
@@ -96,7 +103,7 @@ offset_bottom = 160.0
 text = "Timevalue"
 metadata/_edit_lock_ = true
 
-[node name="click_value" type="Label" parent="ScoreDisplay"]
+[node name="click_value" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1057.0
 offset_top = 197.0
 offset_right = 1145.0
@@ -105,7 +112,7 @@ text = "10"
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="p1_sc_text" type="Label" parent="ScoreDisplay"]
+[node name="p1_sc_text" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1059.0
 offset_top = 231.0
 offset_right = 1192.0
@@ -114,7 +121,7 @@ theme_override_fonts/font = ExtResource("4_ynm1g")
 text = "蓝色玩家得分"
 metadata/_edit_lock_ = true
 
-[node name="p1_sc_value" type="Label" parent="ScoreDisplay"]
+[node name="p1_sc_value" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1060.0
 offset_top = 260.0
 offset_right = 1133.0
@@ -122,7 +129,7 @@ offset_bottom = 286.0
 text = "0"
 metadata/_edit_lock_ = true
 
-[node name="p2_sc_text" type="Label" parent="ScoreDisplay"]
+[node name="p2_sc_text" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1059.0
 offset_top = 298.0
 offset_right = 1205.0
@@ -131,7 +138,7 @@ theme_override_fonts/font = ExtResource("4_ynm1g")
 text = "绿色玩家得分"
 metadata/_edit_lock_ = true
 
-[node name="p2_sc_value" type="Label" parent="ScoreDisplay"]
+[node name="p2_sc_value" type="Label" parent="ScoreDisplay/Control"]
 offset_left = 1060.0
 offset_top = 326.0
 offset_right = 1125.0
@@ -142,6 +149,74 @@ metadata/_edit_lock_ = true
 
 [node name="FileImportDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="round_value" type="LineEdit" parent="CanvasLayer/Control"]
+layout_mode = 2
+offset_left = 1188.0
+offset_top = 143.0
+offset_right = 1255.06
+offset_bottom = 192.0
+
+[node name="hq_value" type="LineEdit" parent="CanvasLayer/Control"]
+layout_mode = 2
+offset_left = 1191.0
+offset_top = 293.0
+offset_right = 1258.06
+offset_bottom = 342.0
+
+[node name="connection_value" type="LineEdit" parent="CanvasLayer/Control"]
+layout_mode = 2
+offset_left = 1190.0
+offset_top = 366.0
+offset_right = 1257.06
+offset_bottom = 415.0
+
+[node name="time_pr_value" type="LineEdit" parent="CanvasLayer/Control"]
+layout_mode = 2
+offset_left = 1189.0
+offset_top = 215.0
+offset_right = 1256.06
+offset_bottom = 264.0
+
+[node name="round" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 1128.0
+offset_top = 158.0
+offset_right = 1176.0
+offset_bottom = 184.0
+text = "轮次："
+
+[node name="hq" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 1109.0
+offset_top = 311.0
+offset_right = 1182.0
+offset_bottom = 338.0
+text = "HQ分数："
+
+[node name="connection" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 1039.0
+offset_top = 382.0
+offset_right = 1183.0
+offset_bottom = 409.0
+text = "Connections分数："
+
+[node name="time_per_round" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 1101.0
+offset_top = 225.0
+offset_right = 1181.0
+offset_bottom = 251.0
+text = "每轮时间："
 
 [connection signal="timeout" from="TileMap/Timer" to="TileMap" method="_on_timer_timeout"]
 [connection signal="timeout" from="TileMap/Timer1s" to="TileMap" method="_on_timer_1s_timeout"]
