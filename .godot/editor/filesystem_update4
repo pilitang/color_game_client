@@ -1,3 +1,4 @@
-res://control.tscn
-res://Player.gd
 res://Main.tscn
+res://control.tscn
+res://node_2d.tscn
+res://Player.gd

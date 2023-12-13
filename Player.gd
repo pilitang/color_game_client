@@ -132,14 +132,14 @@ func _ready():
 #label显示点击剩余次数
 #修改 click_value的label
 func updata_input_count(input_counter):
-	var label_click = get_node("../ScoreDisplay/click_value")
+	var label_click = get_node("../ScoreDisplay/Control/click_value")
 	var click_remain = N-input_counter
 	label_click.text = str(click_remain)
 	
 	
 	
 func time_left_update():
-	var mytimer_label = get_node("../ScoreDisplay/time_value")
+	var mytimer_label = get_node("../ScoreDisplay/Control//time_value")
 	var timer = $Timer
 	var mytime_left = round(timer.time_left)
 	mytimer_label.text = str(mytime_left)
@@ -194,14 +194,14 @@ func time_off():
 	timer.stop()
 	
 func update_score_p1(score_p1):
-	var label_score = get_node("../ScoreDisplay/p1_sc_value")
+	var label_score = get_node("../ScoreDisplay/Control//p1_sc_value")
 	label_score.text = str(score_p1)
 func update_score_p2(score_p2):
-	var label_score = get_node("../ScoreDisplay/p2_sc_value")
+	var label_score = get_node("../ScoreDisplay/Control//p2_sc_value")
 	label_score.text = str(score_p2)
 
 func your_color():
-	var label_color = get_node("../ScoreDisplay/color_value")
+	var label_color = get_node("../ScoreDisplay/Control//color_value")
 	var mycolor
 	if PlayerX == 1:
 		mycolor = "蓝色"
