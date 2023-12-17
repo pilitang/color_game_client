@@ -51,7 +51,6 @@ scale = Vector2(-21842, 119877)
 script = ExtResource("3_f6ddo")
 
 [node name="Control" type="Control" parent="ScoreDisplay"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
