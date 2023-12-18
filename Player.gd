@@ -17,6 +17,9 @@ var player_no_creator_id = 0
 
 var local_room_id = 0
 
+var connection_value = 10
+var hq_value = 40
+
 ##----------------DONT CHANGE-----------------###
 const main_layer = 0			#tilemap
 const main_atlas_id = 0			#tilemap
@@ -51,6 +54,12 @@ var time_after_game = Time.get_ticks_msec ( )
 func _ready():
 	
 	can_process_input = true
+	
+	N = int(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 2).get_node("Control/round_value").text)
+	$Timer.wait_time = int(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 2).get_node("Control/time_per_value").text)
+	connection_value = int(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 2).get_node("Control/connection_value").text)
+	hq_value = int(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 2).get_node("Control/hq_value").text)
+	$"../ScoreDisplay/Control/name".text = get_tree().root.get_children()[1].get_node("NameEdit").text
 	#map_path1 = MapPath.map_path
 	#map_path1 =  %MapPath.text
 	#var file = FileAccess.open(map_path1, FileAccess.READ)
@@ -223,7 +232,8 @@ func _input(event):
 			timestamp = Time.get_datetime_string_from_system(false, true)
 			time_after_game = Time.get_ticks_msec() 
 			var global_clicked = event.position
-			var pos_clicked = local_to_map(to_local(global_clicked))
+			#var pos_clicked = local_to_map(to_local(global_clicked))
+			var pos_clicked = local_to_map(get_global_mouse_position())
 			var current_atlas_coords = get_cell_atlas_coords(main_layer, pos_clicked)	#黑白红
 			var current_tile_alt = get_cell_alternative_tile(main_layer, pos_clicked)	#白 + 1 =蓝，白 + 2 = 绿
 			var new_tile_alt = PlayerX
@@ -751,7 +761,8 @@ func get_score(pos_list):
 
 	var myscore_1 = general_score(pos_list)
 	
-	score_out = myscore_1*10 + myscore_2*40
+	
+	score_out = myscore_1*connection_value + myscore_2*hq_value
 	return score_out
 #---------------------------------------------------------------#
 

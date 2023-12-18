@@ -1,5 +1,9 @@
-Label
 Control
+HBoxContainer
+Camera2D
+TileMap
+Button
 LineEdit
+Label
 VBoxContainer
 CanvasLayer
