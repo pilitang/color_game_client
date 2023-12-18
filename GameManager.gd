@@ -15,6 +15,7 @@ const ERROR_GAME_ALREADY_STARTED: String = "Game already started"
 
 var s_rooms: Dictionary = {}
 var s_players: Dictionary = {}
+var s_maps: Dictionary = {}
 
 var c_rooms: Dictionary = {}
 var c_players: Dictionary = {}
@@ -25,6 +26,10 @@ var s_empty_rooms: Array = []
 enum { WAITING, STARTED }
 
 var timestamp = Time.get_datetime_string_from_system(false, true)
+
+var map_data_path
+
+var my_map_data
 	
 #@rpc("any_peer")
 #func join_room(room_name,id):
@@ -103,6 +108,8 @@ func create_room(info: Dictionary) -> void:
 		players_in_room = {},
 		players_done = 0,
 		state = WAITING,
+		selected_map_file = "",
+		selected_map_data = {},
 		room_id = room_id
 	}
 	
@@ -124,7 +131,21 @@ func join_room(room_id: int, info: Dictionary) -> void:
 	#	get_tree().get_root().disconnect_peer(sender_id)
 	#else:
 	_add_player_to_room(room_id, sender_id, info)
+	
+	var room: Dictionary = _get_room(sender_id)
+	room.state = STARTED
+	# 通知客户端更新label显示
+	var client_control_label_str = str("Your room") + str(room.room_id) + " is matched. Please click Draw Map to continue."
+	# get_tree().root.get_children()[1].get_node("Label").text 
+	for player_id in room.players_in_room:
+		change_client_control.rpc_id(player_id, client_control_label_str)
+	
 
+@rpc("any_peer")
+func change_client_control(value):
+	get_tree().root.get_children()[1].get_node("Label").text = value
+	get_tree().root.get_children()[1].get_node("Host").visible = false
+	
 # 服务器端 更新数据
 func _add_player_to_room(room_id: int, id: int, info: Dictionary) -> void:
 	print("func add_player_to_room entered!")
@@ -160,8 +181,6 @@ func start_game() -> void:
 
 	var room: Dictionary = _get_room(sender_id)
 
-	room.state = STARTED
-
 	for player_id in room.players_in_room:
 		StartGame.rpc_id(player_id)
 
@@ -173,16 +192,61 @@ func _get_room(player_id: int) -> Dictionary:
 ####Load Game here. And hide our connect menu 
 @rpc("any_peer")
 func StartGame():
+	var current_scene = get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1)
+	current_scene.queue_free()
 	var scene = load("res://Main.tscn").instantiate()
 	get_tree().root.add_child(scene)
 	get_tree().get_current_scene().hide()
+	
+	var my_unique_id: int = multiplayer.get_unique_id()
+	var room: Dictionary = _get_room(my_unique_id)
+	load_map_to_client_main(room.selected_map_data)
+	
+
+@rpc("any_peer")
+func load_map_to_client_main(map_data):
+	for key in map_data.map:
+		var item = map_data.map[key]
+		get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("TileMap").set_cell(item.layer,item.coords,item.source_id,item.atlas_coords)
+
+	
+
+@rpc("any_peer")
+func load_map(path):
+	# 服务端读取地图数据，客户端根据服务器端传来的地图数据在本地渲染出来
+	var file = FileAccess.open(path, FileAccess.READ)
+	var content = file.get_as_text()
+	
+	my_map_data = str_to_var(content)
+	
+	var sender_id: int = multiplayer.get_remote_sender_id()
+	
+	var room: Dictionary = _get_room(sender_id)
+	room.selected_map_file = path
+	room.selected_map_date = my_map_data
+	
+	for player_id in room.players_in_room:
+		load_map_to_client.rpc_id(player_id,my_map_data)
+	
+
+@rpc("any_peer")
+func load_map_to_client(map_data):
+	var scene = load("res://user_setting.tscn").instantiate()
+	get_tree().root.add_child(scene)
+	get_tree().get_current_scene().hide()	
+	for key in map_data.map:
+		var item = map_data.map[key]
+		get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("TileMap").set_cell(item.layer,item.coords,item.source_id,item.atlas_coords)
+
 
 
 @rpc("any_peer")
-func _set_room_by_frame(rooms,players):
+func _set_room_by_frame(rooms,players,maps):
 	
 	if get_tree().current_scene.rooms!= rooms: 
-		get_tree().current_scene.rooms= rooms	
+		get_tree().current_scene.rooms= rooms
+	if get_tree().current_scene.maps!= maps: 
+		get_tree().current_scene.maps= maps	
 	c_rooms = rooms
 	c_players = players
 
@@ -328,36 +392,36 @@ func process_click_send(mylocal_room_id):
 #同步tile
 @rpc("any_peer")
 func sync_score(player1score, player2score):
-	get_tree().root.get_children()[2].get_node("ScoreDisplay/Player1Score").text = "Player 1 Score is "+str(player1score)
-	get_tree().root.get_children()[2].get_node("ScoreDisplay/Player2Score").text = "Player 2 Score is "+str(player2score)
+	get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("ScoreDisplay/Player1Score").text = "Player 1 Score is "+str(player1score)
+	get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("ScoreDisplay/Player2Score").text = "Player 2 Score is "+str(player2score)
 @rpc("any_peer")
 func sync_tile_change_rpc(pos_clicked, current_atlas_coords, new_tile_alt):
 	# 在这里应用从服务器接收到的改变set_cell(main_layer, pos_clicked, main_atlas_id, current_atlas_coords, new_tile_alt)
 	var node_num = get_tree().root.get_children()
-	get_tree().root.get_children()[2].get_node("TileMap").sync_tile_change(pos_clicked, current_atlas_coords, new_tile_alt)
+	get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("TileMap").sync_tile_change(pos_clicked, current_atlas_coords, new_tile_alt)
 	
 	#print("set tile in the client")
 #同步stage and counter
 @rpc("any_peer")
 func sync_input_stage_and_counter(new_stage,new_counter):
-	get_tree().root.get_children()[2].get_node("TileMap").input_stage = new_stage
-	get_tree().root.get_children()[2].get_node("TileMap").input_counter = new_counter
+	get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("TileMap").input_stage = new_stage
+	get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("TileMap").input_counter = new_counter
 	
 #重置input使用
 @rpc("any_peer")
 func resume_input():
-	get_tree().root.get_children()[2].get_node("TileMap").can_process_input_GM = true
+	get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("TileMap").can_process_input_GM = true
 	
 
 @rpc("any_peer")
 func set_cell_color_rpc(player1_pos, player2_pos, playerx_winner):
-	get_tree().root.get_children()[2].get_node("TileMap").set_cell_color(player1_pos, player2_pos, playerx_winner)
+	get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("TileMap").set_cell_color(player1_pos, player2_pos, playerx_winner)
 
 
 #----------------------------------log file—-----------------------------------#
 @rpc("any_peer")
 func logging_server(file_name,content):
-	var path = "user://Inputlogs//" + file_name
+	var path = "user://" + file_name
 	var file = FileAccess.open(path, FileAccess.READ_WRITE)
 	if FileAccess.file_exists(path):
 
@@ -373,3 +437,33 @@ func logging_server(file_name,content):
 			file.seek_end()
 			file.store_line(json_string + "\n")
 			file.close()
+			
+#----------------------------------save user map to server—-----------------------------------#
+@rpc("any_peer")
+func save_map_to_server(file_name,map_data):
+	var path = "user://" + file_name
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(var_to_str(map_data))
+	s_maps[path] = {
+		map_path = path
+	}
+
+	
+
+
+# Change scene
+func change_scene(scene_path):
+	# Get the current scene
+	var current_scene_name = scene_path.get_file().get_basename()
+	var current_scene = get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1)
+	# Free it for the new scene
+	current_scene.queue_free()
+	# Change the scene
+	var new_scene = load(scene_path).instantiate()
+	get_tree().get_root().call_deferred("add_child", new_scene) 
+	get_tree().call_deferred("set_current_scene", new_scene)
+	
+	
+@rpc("any_peer")
+func change_create_txex(create_text):
+	get_tree().root.get_children()[1].get_node("Label").text = create_text

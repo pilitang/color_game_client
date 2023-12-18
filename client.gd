@@ -5,6 +5,7 @@ extends Control
 
 #
 @onready var v_box_container = %VBoxContainer
+@onready var v_box_container_map = %VBoxContainerMap
 
 #Test
 var port = 8888
@@ -31,6 +32,21 @@ var rooms = {}:
 				button.text = "Room " + str(key)
 				button.connect("pressed",Callable(self,"_join_room").bind(button))
 				v_box_container.add_child(button)
+				
+var maps = {}:
+	set(value):
+		maps = value
+		for node in v_box_container_map.get_children():
+			node.queue_free()
+		#var my_unique_id = multiplayer.get_unique_id()
+		#var room: Dictionary = GameManager._get_room(my_unique_id)
+		#var room_name = str("room") + str(room.room_id)
+		for key in maps.keys():
+			#if room_name in maps[key].map_path:
+			var button = Button.new()
+			button.text =  str(key)
+			button.connect("pressed",Callable(self,"_load_map").bind(button))
+			v_box_container_map.add_child(button)
 
 
 var my_info: Dictionary = {
@@ -48,6 +64,10 @@ func _join_room(node):
 	#multiplayer.rpc(0,GameManager,"join_room",[int(node.text),id])
 	my_info["id"] = multiplayer.get_unique_id()
 	GameManager.join_room.rpc_id(1, int(node.text), my_info)
+	
+func _load_map(node):
+	# 客户端选中地图，服务端做两件事，由两个完成rpc完成，一个是读取本地数据，另一个是调用客户端的rpc函数来渲染
+	GameManager.load_map.rpc_id(1, str(node.text))
 
 
 # Called when the node enters the scene tree for the first time.
