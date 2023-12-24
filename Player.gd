@@ -53,23 +53,81 @@ var time_after_game = Time.get_ticks_msec ( )
 
 func _ready():
 	
-	can_process_input = true
+#	can_process_input = true
 	
 	N = int(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 2).get_node("Control/round_value").text)
 	$Timer.wait_time = int(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 2).get_node("Control/time_per_value").text)
 	connection_value = int(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 2).get_node("Control/connection_value").text)
 	hq_value = int(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 2).get_node("Control/hq_value").text)
 	$"../ScoreDisplay/Control/name".text = get_tree().root.get_children()[1].get_node("NameEdit").text
-	#map_path1 = MapPath.map_path
-	#map_path1 =  %MapPath.text
-	#var file = FileAccess.open(map_path1, FileAccess.READ)
-	#var content = file.get_as_text()
-	#data = str_to_var(content)
 
-	#for key in str_to_var(content).map:
-	#	var item = str_to_var(content).map[key]
-	#	set_cell(item.layer,item.coords,item.source_id,item.atlas_coords)
-	#%FileImportDialog.popup()
+#	myself_id = multiplayer.get_unique_id()
+#	cs_room = GameManager._get_room(myself_id)			#return c_rooms[myroom_id]
+##	{ "creator": 1576778491, "players_in_room": { 1576778491: { "id": 1576778491, "score": 0, "map_id": <null>, "room_id": 0 }, 1273181895: { "id": 1273181895, "score": 0, "map_id": <null>, "room_id": 0 } }, 
+##"players_done": 0, "state": 0, "room_id": 0 }
+#
+#	local_room_id = cs_room["room_id"]
+#
+#	player1_id = cs_room["players_in_room"].keys()[0]
+#	player2_id = cs_room["players_in_room"].keys()[1]
+#
+#	player_creator_id = cs_room["creator"]
+#
+#
+#	#房主 id
+#	if player_creator_id == player1_id:
+#		player_no_creator_id = player2_id
+#	else:
+#		player_no_creator_id = player1_id
+#
+#	#本地，自己id 和 对手id
+#	if myself_id == player1_id:
+#		opponent_id = player2_id
+#	else:
+#		opponent_id = player1_id
+#
+#	if multiplayer.get_unique_id() == player_creator_id:
+#		PlayerX = 1     #玩家代号,同样也是替换棋子颜色,player1是蓝色
+#	else:
+#		PlayerX = 2     #玩player2是绿色
+#
+#	updata_input_count(input_counter)	#游戏开始时点击剩余计数器
+#
+#
+#
+#	#####连通性_ready
+#	for i in range(-50,50):
+#		for j in range(-50,50):
+#			var mypos = Vector2i(i,j)
+#			if get_cell_atlas_coords(main_layer, mypos)== white:
+#				all_white_node[mypos] = white
+#
+#			if get_cell_atlas_coords(main_layer, mypos)== black:
+#				all_black_node[mypos] = black
+#	for i in all_white_node:
+#		neighbour(i)				#修改 neighbour_graph，添加记录
+#	for i in all_black_node:
+#		neighbour(i) 				#修改 neighbour_graph
+#	romove_white_neighbour_graph = remove_entries_with_white(neighbour_graph)
+#	#_reeady return : romove_white_neighbour_graph  eighbour_graph 
+#	#####连通性_ready
+#	your_color()
+#	#----------------------------------log file—-----------------------------------#
+#	var uid = myself_id
+#	var verb = "Start"
+#	var object = "game"
+#	var myscore_p1 = score_p1
+#	var myscore_p2 = score_p2
+#	var play_number = PlayerX
+#	var mytimestamp = Time.get_datetime_string_from_system(false, true)
+#	var mytimestamp_msec = Time.get_ticks_msec ( )
+#	var context = ""
+#	var mydata = info_log(uid, verb, object, myscore_p1,myscore_p2,play_number,mytimestamp,mytimestamp_msec,context)
+#	logging("log.json",mydata)
+
+#----------------------------------log end—----------------------------------#
+func after_load_map_data():
+	can_process_input = true
 
 	myself_id = multiplayer.get_unique_id()
 	cs_room = GameManager._get_room(myself_id)			#return c_rooms[myroom_id]
@@ -135,7 +193,6 @@ func _ready():
 	var mydata = info_log(uid, verb, object, myscore_p1,myscore_p2,play_number,mytimestamp,mytimestamp_msec,context)
 	logging("log.json",mydata)
 
-#----------------------------------log end—----------------------------------#
 	
 #------------------UI Label code-------------#
 #label显示点击剩余次数
