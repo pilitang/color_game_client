@@ -1,11 +1,6 @@
-res://control.tscn
-res://GameManager.gd
 res://node_2d.tscn
-res://node_2d.gd
 res://Main.tscn
-res://client.gd
-res://user_setting.tscn
-res://user_setting.gd
 res://Player.gd
-res://TileMap_load.gd
-res://TileMap.gd
+res://GameManager.gd
+res://control.tscn
+res://user_setting.tscn

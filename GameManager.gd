@@ -201,6 +201,7 @@ func StartGame():
 	var my_unique_id: int = multiplayer.get_unique_id()
 	var room: Dictionary = _get_room(my_unique_id)
 	load_map_to_client_main(room.selected_map_data)
+	get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1).get_node("TileMap").after_load_map_data()
 	
 
 @rpc("any_peer")

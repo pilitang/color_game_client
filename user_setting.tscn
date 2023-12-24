@@ -1,8 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddne5danj27vj"]
+[gd_scene load_steps=7 format=3 uid="uid://ddne5danj27vj"]
 
 [ext_resource type="Script" path="res://user_setting.gd" id="1_royou"]
 [ext_resource type="Script" path="res://TileMap.gd" id="2_lyw1c"]
+[ext_resource type="Texture2D" uid="uid://dktd5rk2m3vlu" path="res://hex_grid.png" id="2_qntf1"]
 [ext_resource type="FontVariation" uid="uid://bnkhbrbxw3n74" path="res://dy_font_variation.tres" id="3_huutq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wkcuj"]
+texture = ExtResource("2_qntf1")
+texture_region_size = Vector2i(111, 95)
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_vt8hx"]
+tile_offset_axis = 1
+tile_size = Vector2i(111, 95)
+sources/0 = SubResource("TileSetAtlasSource_wkcuj")
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -14,6 +27,7 @@ grow_vertical = 2
 script = ExtResource("1_royou")
 
 [node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_vt8hx")
 format = 2
 script = ExtResource("2_lyw1c")
 tile_size = Vector2(102, 94)

@@ -6,17 +6,17 @@
 [ext_resource type="Script" path="res://common/base/base_control.gd" id="3_nqvvc"]
 [ext_resource type="FontVariation" uid="uid://bnkhbrbxw3n74" path="res://dy_font_variation.tres" id="5_hcn82"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f6h88"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ky21s"]
 texture = ExtResource("2_4wo8q")
 texture_region_size = Vector2i(111, 95)
 0:0/0 = 0
 0:1/0 = 0
 0:2/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_xgayy"]
+[sub_resource type="TileSet" id="TileSet_skey3"]
 tile_offset_axis = 1
 tile_size = Vector2i(111, 95)
-sources/0 = SubResource("TileSetAtlasSource_f6h88")
+sources/0 = SubResource("TileSetAtlasSource_ky21s")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yniq2"]
 bg_color = Color(0.67451, 0.580392, 0.501961, 1)
@@ -25,7 +25,7 @@ bg_color = Color(0.67451, 0.580392, 0.501961, 1)
 script = ExtResource("1_tshts")
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_xgayy")
+tile_set = SubResource("TileSet_skey3")
 format = 2
 script = ExtResource("3_g3fpt")
 tile_size = Vector2(102, 94)
@@ -100,6 +100,7 @@ theme_override_fonts/font = ExtResource("5_hcn82")
 text = "保存地图"
 
 [node name="import_Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_hcn82")
 text = "导入地图"
